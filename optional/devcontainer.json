@@ -1,0 +1,14 @@
+{
+	"name": "Existing Dockerfile",
+	"build": {
+		"context": "..",
+		"dockerfile": "../Dockerfile"
+	},
+	"runArgs": [
+		"--name",
+		"tobbi_connect_container",
+		"--network",
+		"tobii_net"
+	],
+	"initializeCommand": "docker network inspect tobii_net >/dev/null 2>&1 || docker network create --subnet=192.168.71.0/24 tobii_net"
+}

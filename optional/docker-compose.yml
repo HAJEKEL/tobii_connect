@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  my_service:
+    build: .
+    container_name: my_container_name
+    networks:
+      tobii_net:
+        ipv4_address: 192.168.71.10
+
+networks:
+  tobii_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.71.0/24

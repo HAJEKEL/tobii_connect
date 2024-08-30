@@ -1,0 +1,45 @@
+# I connected to the wifi of the tobii glasses and ran:
+ping ping 192.168.71.50
+Return:
+henk@warmthwork:~/Desktop/tobii_connect$ ping 192.168.71.50
+PING 192.168.71.50 (192.168.71.50) 56(84) bytes of data.
+64 bytes from 192.168.71.50: icmp_seq=1 ttl=64 time=2.91 ms
+If I try to do that while connected to my own router,
+its being blocked by firewall or something. Because packets dont
+arrive and are filtered. 
+IPv4
+ping 192.168.71.50
+IPv6
+ping6 ff02::1%enp0s31f6
+
+
+from tobiiglassesctrl import TobiiGlassesController
+IPv4
+TobiiGlassesController("192.168.71.50")
+IPv6
+TobiiGlassesController("fe80::52bc:2e3e:d916:f34e%enp0s31f6")
+# fe80::52bc:2e3e:d916:f34e%enp0s31f6
+# ff02::1%eth0
+
+Error:
+>>> TobiiGlassesController("fe80::52bc:2e3e:d916:f34e%enp0s31f6")
+[DEBUG]: Connecting to the Tobii Pro Glasses 2 ...
+[DEBUG]: Disconnecting to the Tobii Pro Glasses 2
+Exception ignored in: <function TobiiGlassesController.__del__ at 0x7926aa4a0430>
+Traceback (most recent call last):
+  File "/home/henk/.local/lib/python3.10/site-packages/tobiiglassesctrl/controller.py", line 100, in __del__
+    self.close()
+  File "/home/henk/.local/lib/python3.10/site-packages/tobiiglassesctrl/controller.py", line 314, in close
+    self.__disconnect__()
+  File "/home/henk/.local/lib/python3.10/site-packages/tobiiglassesctrl/controller.py", line 116, in __disconnect__
+    self.data_socket.close()
+AttributeError: 'TobiiGlassesController' object has no attribute 'data_socket'
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/henk/.local/lib/python3.10/site-packages/tobiiglassesctrl/controller.py", line 96, in __init__
+    if self.__connect__(timeout = timeout) is False:
+  File "/home/henk/.local/lib/python3.10/site-packages/tobiiglassesctrl/controller.py", line 104, in __connect__
+    self.data_socket = self.__mksock__()
+  File "/home/henk/.local/lib/python3.10/site-packages/tobiiglassesctrl/controller.py", line 187, in __mksock__
+    sock.setsockopt(socket.SOL_SOCKET, 25, self.iface_name+'\0')
+TypeError: a bytes-like object is required, not 'str'
