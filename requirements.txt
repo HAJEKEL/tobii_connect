@@ -1,2 +1,2 @@
-Pyrebase4
 tobiiglassesctrl
+opencv-python
