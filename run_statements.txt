@@ -53,3 +53,5 @@ nmcli dev wifi connect "TG02B-080108020081" password "TobiiGlasses" ifname wlxb0
 
 To connect the internal wifi adapter to the local network, run:
 nmcli dev wifi connect "warmth_5G" password "andyjekel" ifname 
+
+uvicorn capture:app --host 0.0.0.0 --port 8011 --reload
