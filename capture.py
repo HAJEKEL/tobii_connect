@@ -12,14 +12,16 @@ app = FastAPI()
 # CORS setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://frontend-example.ngrok-free.app"],  # Replace with your frontend URL
+    allow_origins=["https://frontend-example.ngrok-free.app","http://localhost:5174"],  # Replace with your frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Tobii setup
+#ipv4_address = "192.168.71.50192"
 ipv4_address = "192.168.71.50"
+
 tobiiglasses = TobiiGlassesController(ipv4_address, video_scene=True)
 project_id = tobiiglasses.create_project("Test live_scene_and_gaze.py")
 participant_id = tobiiglasses.create_participant(project_id, "participant_test")
