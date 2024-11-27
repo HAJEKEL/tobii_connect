@@ -28,6 +28,89 @@ participant_id = tobiiglasses.create_participant(project_id, "participant_test")
 calibration_id = tobiiglasses.create_calibration(project_id, participant_id)
 is_calibrated = False  # Flag to track calibration status
 
+
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+
+app = FastAPI()
+
+@app.get("/", response_class=HTMLResponse)
+def read_root():
+    """
+    Root endpoint describing the API functionality in Markdown-style rendered HTML.
+    """
+    markdown_content = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tobii Glasses 2 API</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 20px;
+                padding: 0;
+                background-color: #f9f9f9;
+                color: #333;
+            }
+            h1 {
+                color: #4CAF50;
+            }
+            pre {
+                background-color: #f4f4f4;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                overflow-x: auto;
+            }
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+            a {
+                color: #4CAF50;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to the Tobii Glasses 2 API Server</h1>
+        <p>This server interfaces with the Tobii Glasses 2 for calibration and gaze tracking.</p>
+        <img src="https://example.com/tobii-glasses-image.jpg" alt="Tobii Glasses 2" />
+        
+        <h2>Available Endpoints</h2>
+        <ul>
+            <li>
+                <strong><code>/calibrate</code></strong> (POST) - Endpoint to calibrate the Tobii glasses.
+                <pre>
+Example Request Body:
+{
+    "calibration_point_count": 5,
+    "participant_id": "12345"
+}
+                </pre>
+            </li>
+            <li>
+                <strong><code>/capture_snapshot</code></strong> (GET) - Captures a snapshot with gaze point overlay.
+                <pre>
+Example Response:
+{
+    "status": "success",
+    "image_url": "http://example.com/snapshot.jpg"
+}
+                </pre>
+            </li>
+        </ul>
+
+        <h2>Usage Instructions</h2>
+        <p>Use the endpoints as described above to interact with the Tobii Glasses 2 API.</p>
+    </body>
+    </html>
+    """
+    return markdown_content
+
+
 @app.get("/calibrate")
 async def calibrate():
     global is_calibrated
